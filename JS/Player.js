@@ -5,6 +5,7 @@ function Player(startX, startY, teamColour, explosionRange){
     this.yPos = startY;
     this.colour = teamColour
     this.range = explosionRange;
+    this.life = 3;
     
 
     this.render = function(){

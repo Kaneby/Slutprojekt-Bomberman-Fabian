@@ -110,6 +110,23 @@ function update() {
         
         bombTimer1++;
     }
+    
+    //skriva ut liv kvar
+    
+    ctx.clearRect(650, 0, 50, 650);
+    ctx.font="50px Verdana";
+    ctx.fillStyle = "blue";
+    ctx.fillText(players[1].life, 665, 300);
+    ctx.fillStyle = "red"
+    ctx.fillText(players[2].life, 665, 400);
+    
+    ctx.fillStyle = "black";
+    ctx.fillText("L", 665, 50);
+    ctx.fillText("I", 665, 100);
+    ctx.fillText("F", 665, 150);
+    ctx.fillText("E", 665, 200);
+    ctx.fillText("S", 665, 250);
+    
     //starta removeBoxes funktionen
     if (bombTimer1 == 50) {
 
