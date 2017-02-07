@@ -38,7 +38,7 @@ for (var i = 1; i <= 13; i = i + 1) {
         }
         //förhindra boxes där players startar
     } else if (i == 1 || i == 13) {
-        for (var l = 3; l < 11; l++) {
+        for (var l = 2; l < 11; l++) {
             //instatiera slumpmässigt ut boxes
             if (Math.random() > 0.3) {
                 boxes.push(new Box(l * 50, boxStartY * 50));
@@ -107,52 +107,52 @@ function update() {
 
 
         bombPlayer1[1].bombRender();
-        
+
         bombTimer1++;
     }
-    
+
     //skriva ut liv kvar
-    
+
     ctx.clearRect(650, 0, 50, 650);
-    ctx.font="50px Verdana";
+    ctx.font = "50px Verdana";
     ctx.fillStyle = "blue";
     ctx.fillText(players[1].life, 665, 300);
     ctx.fillStyle = "red"
     ctx.fillText(players[2].life, 665, 400);
-    
+
     ctx.fillStyle = "black";
     ctx.fillText("L", 665, 50);
     ctx.fillText("I", 665, 100);
     ctx.fillText("F", 665, 150);
     ctx.fillText("E", 665, 200);
     ctx.fillText("S", 665, 250);
-    
+
     //starta removeBoxes funktionen
     if (bombTimer1 == 50) {
 
         bombPlayer1[1].removeBoxes(players[1]);
         bombTimer1++;
-        
+
     }
     //måla ut explosionen
     if (bombTimer1 >= 51) {
 
         bombPlayer1[1].explosionRender(players[1]);
         bombTimer1++;
-        
+
         //kolla om bomben dödar någon, samt skicka med att player1 la bomben
         bombPlayer1[1].kill(players[1]);
 
     }
     //ta bort bomben och reseta bombTimer1
     if (bombTimer1 == 100) {
-        
+
         bombPlayer1.splice(1, 1);
         bombTimer1 = 0;
     }
-    
+
     //Player2 Sprängning
-    
+
     if (bombPlayer2.length > 1 && bombTimer2 < 50) {
 
 
@@ -167,7 +167,7 @@ function update() {
     }
     //måla ut explosionen
     if (bombTimer2 >= 51) {
-        
+
         bombPlayer2[1].explosionRender(players[2]);
         bombTimer2++;
         //kolla om bomben dödar någon, samt skicka med att player2 la bomben
@@ -180,43 +180,71 @@ function update() {
         bombPlayer2.splice(1, 1);
         //console.log("splice bomb2");
         bombTimer2 = 0;
-        
+
     }
-    
+
     //måla ut ev boost
-    if(boosters.length > 0){
-        
+    if (boosters.length > 0) {
+
         //console.log("i update funktionen");
-        for(var i = 0; i < boosters.length; i++){
+        for (var i = 0; i < boosters.length; i++) {
             //console.log("i loopen")
             boosters[i].render();
         }
-        
-        
+
+
     }
-    
+
     //loopa igenom och hitta om någon plockar upp booster samt vilken player
-    if(boosters.length > 0){
-        
-        for(var i = 0; i < boosters.length; i++){
-            
-            if(players[1].xPos == boosters[i].xPos && players[1].yPos == boosters[i].yPos){
-                
+    if (boosters.length > 0) {
+
+        for (var i = 0; i < boosters.length; i++) {
+
+            if (players[1].xPos == boosters[i].xPos && players[1].yPos == boosters[i].yPos) {
+
                 boosters[i].boostPickup(players[1], i);
                 console.log("boostersPickup i update");
-                
-            } else if(players[2].xPos == boosters[i].xPos && players[2].yPos == boosters[i].yPos){
-                
+
+            } else if (players[2].xPos == boosters[i].xPos && players[2].yPos == boosters[i].yPos) {
+
                 boosters[i].boostPickup(players[2], i);
                 console.log("boostersPickup i update");
-                
+
             }
-            
-            
+
+
         }
-        
+
     }
+
     
+    //Avsluta spelet
+    if (players[1].life == 0) {
+            
+            ctx.clearRect(0, 0, 750, 650);
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 750, 650);
+            
+            ctx.fillStyle = "red";
+            ctx.font = "50px Verdana";
+            ctx.fillText("RÖD VINNER, GRATTIS!", 100, 300);
+            
+        
+        } else if (players[2].life == 0 ) {
+            
+            ctx.clearRect(0, 0, 750, 650);
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 750, 650);
+            
+            ctx.fillStyle = "blue";
+            ctx.font = "50px Verdana";
+            ctx.fillText("BLÅ VINNER, GRATTIS!", 100, 300);
+            
+
+
+        }
+    
+
 
 
 
@@ -227,9 +255,9 @@ function update() {
     //måla players
     players[1].render();
     players[2].render();
-    
 
-    
+
+
 
 
 

@@ -101,17 +101,17 @@ function Explosion(startX, startY, whichPlayer, teamColour, explosionRange) {
                 } else if (i == boxes.length - 1) {
                     console.log("sista else this up = player range vänster");
                     this.rightExp = player.range;
-                    
-                 //inte spränga utanför spelplanen
-                } else if(this.xPos + j * 50 == 650){
-                    
+
+                    //inte spränga utanför spelplanen
+                } else if (this.xPos + j * 50 == 650) {
+
                     this.rightExp = j - 1;
                     j = player.range + 1;
                     i = boxes.length + 1;
                 }
-                    
-                
-                
+
+
+
             }
         }
         for (var j = 0; j <= player.range; j++) {
@@ -253,30 +253,36 @@ function Explosion(startX, startY, whichPlayer, teamColour, explosionRange) {
                 players[i].yPos <= this.yPos + (this.downExp * 50) &&
                 this.xPos == players[i].xPos) {
 
-                console.log(players[i].yPos, this.yPos + player.range * 50, players[i].xPos, this.xPos + player.range * 50);
-
+               
                 if (i == 1) {
                     //console.log("player1 död");
                     players[1].xPos = 0;
                     players[1].yPos = 0;
-                    players[1].life--;
+                    if (players[1].life > 0) {
+                        
+                        players[1].life--;
+                    }
+
+
+
+
 
                 } else if (i == 2) {
 
                     //console.log("player2 död");
                     players[2].xPos = 600;
                     players[2].yPos = 600;
-                    players[2].life--;
-                    
-                    if(players[2].life == 0){
+
+                    if (players[2].life > 0) {
                         
-                        ctx.fillStyle = "black";
-                        ctx.fillRect(0, 0, 750, 650);
-                        ctx.font="50px Verdana";
-                        ctx.fillText("BLÅ VINNER, GRATTIS!", 300, 300);
-                        
-                        
+                        players[2].life--;
                     }
+
+
+
+
+
+
 
                 }
 
