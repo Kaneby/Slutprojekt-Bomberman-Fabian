@@ -9,8 +9,8 @@ function Boost(startX, startY){
 this.render = function(){
     
     //console.log("i render funktionen");
-    ctx.fillStyle = "green";
-    ctx.fillRect(this.xPos, this.yPos, 50, 50);
+    //ctx.fillStyle = "green";
+    ctx.drawImage(boostPic, this.xPos, this.yPos, 50, 50);
     
 
     }

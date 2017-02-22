@@ -8,7 +8,7 @@ function Box(startX, startY){
     this.render = function(){
         
         ctx.fillStyle = "brown";
-        ctx.fillRect(this.xPos, this.yPos, 49, 49);
+        ctx.drawImage(boxesPic, this.xPos, this.yPos, 50, 50);
         
     }
     

@@ -72,7 +72,14 @@ function start() {
     ctx.strokeStyle = "black";
 
     window.setInterval(update, 20);
-
+    
+    boxesPic = document.getElementById("boxes");
+    stonePic = document.getElementById("stone");
+    player1Pic = document.getElementById("player1");
+    player2Pic = document.getElementById("player2");
+    explosionPic = document.getElementById("explosion");
+    bombPic = document.getElementById("bomb");
+    boostPic = document.getElementById("boost");
 }
 
 
@@ -92,7 +99,7 @@ function update() {
     //måla "stenar"
     for (var i = 1; i < 12; i = i + 2) {
         for (var j = 1; j < 12; j = j + 2) {
-            ctx.fillRect(i * 50, j * 50, 50, 50);
+            ctx.drawImage(stonePic, i * 50, j * 50, 50, 50);
 
         }
     }
@@ -215,6 +222,16 @@ function update() {
 
         }
 
+    }
+    //kalla på immortal funktionen
+    if(players[1].immortalTimer > 0){
+        players[1].immortal();
+        console.log("skickar från P1");
+        
+    }
+    if(players[2].immortalTimer  > 0){
+        players[2].immortal();
+        console.log("skickar från p2");
     }
 
     

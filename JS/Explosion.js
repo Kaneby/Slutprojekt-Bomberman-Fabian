@@ -12,8 +12,8 @@ function Explosion(startX, startY, whichPlayer, teamColour, explosionRange) {
 
     this.bombRender = function () {
 
-        ctx.fillStyle = "black";
-        ctx.fillRect(this.xPos + 12.5, this.yPos + 12.5, 25, 25);
+        //ctx.fillStyle = "black";
+        ctx.drawImage(bombPic, this.xPos + 12.5, this.yPos + 12.5, 25, 25);
         //ctx.fillRect(this.xPos - 50, this.yPos, 50, 50);
         //ctx.fillRect(this.xPos, this.yPos + 50, 50, 50);
         //ctx.fillRect(this.xPos, this.yPos - 50, 50, 50);
@@ -28,35 +28,35 @@ function Explosion(startX, startY, whichPlayer, teamColour, explosionRange) {
         //console.log(i);
         //console.log("loop i expRender");
 
-        ctx.fillStyle = "orange";
+        
         //mitten sprängning
-        ctx.fillRect(this.xPos, this.yPos, 50, 50);
+        ctx.drawImage(explosionPic, this.xPos, this.yPos, 50, 50);
 
         for (var i = 0; i <= this.rightExp; i++) {
             //höger sprängning
             if ((this.yPos / 50) % 2 == 0) {
 
                 //console.log(i);
-                ctx.fillRect(this.xPos + 50 * i, this.yPos, 50, 50);
+                ctx.drawImage(explosionPic, this.xPos + 50 * i, this.yPos, 50, 50);
             }
         }
         for (var i = 0; i <= this.leftExp; i++) {
             //vänster sprängning
             if ((this.yPos / 50) % 2 == 0) {
-                ctx.fillRect(this.xPos - i * 50, this.yPos, 50, 50);
+                ctx.drawImage(explosionPic, this.xPos - i * 50, this.yPos, 50, 50);
             }
         }
         for (var i = 0; i <= this.downExp; i++) {
             //ner sprängning
             if ((this.xPos / 50) % 2 == 0) {
-                ctx.fillRect(this.xPos, this.yPos + i * 50, 50, 50);
+                ctx.drawImage(explosionPic, this.xPos, this.yPos + i * 50, 50, 50);
             }
         }
         for (var i = 0; i <= this.upExp; i++) {
             //upp sprängning
             //console.log(i, this.upExp);
             if ((this.xPos / 50) % 2 == 0) {
-                ctx.fillRect(this.xPos, this.yPos - i * 50, 50, 50);
+                ctx.drawImage(explosionPic, this.xPos, this.yPos - i * 50, 50, 50);
             }
 
 
@@ -252,30 +252,39 @@ function Explosion(startX, startY, whichPlayer, teamColour, explosionRange) {
                 this.yPos - (this.upExp * 50) <= players[i].yPos &&
                 players[i].yPos <= this.yPos + (this.downExp * 50) &&
                 this.xPos == players[i].xPos) {
-
-               
-                if (i == 1) {
+                
+               //bara dö om immortalTimer == 0
+                if (i == 1 && players[1].immortalTimer == 0) {
                     //console.log("player1 död");
                     players[1].xPos = 0;
                     players[1].yPos = 0;
+                    players[1].immortalTimer = 100;
+                    players[1].range = 1;
+                    
                     if (players[1].life > 0) {
                         
                         players[1].life--;
+                          
+                        
                     }
 
 
 
-
-
-                } else if (i == 2) {
+                    
+                    
+                    //bara dö om immortalTimer == 0
+                } else if (i == 2 && players[2].immortalTimer == 0) {
 
                     //console.log("player2 död");
                     players[2].xPos = 600;
                     players[2].yPos = 600;
+                    players[2].immortalTimer = 100;
+                    players[2].range = 1;
 
                     if (players[2].life > 0) {
                         
                         players[2].life--;
+                        
                     }
 
 
