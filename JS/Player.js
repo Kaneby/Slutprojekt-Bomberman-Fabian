@@ -9,6 +9,8 @@ function Player(startX, startY, teamColour, explosionRange) {
     this.immortalTimer = 0;
 
 
+    
+    
     this.render = function () {
 
             if (this.colour === "blue") {

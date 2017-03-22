@@ -6,6 +6,7 @@ var players = [
     new Player(0, 0, "blue", 1),
     new Player(600, 600, "red", 1)
 ];
+var ai = [];
 var boxes = [0]
 var boxStartY = 0;
 var bombPlayer1 = [0];
@@ -13,6 +14,8 @@ var bombPlayer2 = [0];
 var bombTimer1 = 0;
 var bombTimer2 = 0;
 var boosters = [];
+var actionTimerAI = 0;
+
 
 
 //instantiera boxes samt ge dom korrekta startX och startY värden
@@ -65,11 +68,14 @@ for (var i = 1; i <= 13; i = i + 1) {
 }
 
 
-function start() {
+function init(playerAmount) {
 
     canvas = document.getElementById("c");
     ctx = canvas.getContext("2d");
     ctx.strokeStyle = "black";
+    canvas.style = "display: block"
+    document.getElementById("onePlayer").style = "display: none;"
+    document.getElementById("twoPlayers").style = "display: none;"
 
     window.setInterval(update, 20);
     
@@ -80,7 +86,18 @@ function start() {
     explosionPic = document.getElementById("explosion");
     bombPic = document.getElementById("bomb");
     boostPic = document.getElementById("boost");
+    
+    //ta bort player 2 om 1 player mode och inatiera en AI 
+    if(playerAmount == 1){
+        console.log("new AI");
+        players.pop();
+        ai.push(new Ai(600, 600));
+        
+    }
+    
+    
 }
+
 
 
 function update() {
@@ -109,6 +126,24 @@ function update() {
 
     }
 
+    
+    //skriva ut liv kvar
+
+    ctx.clearRect(650, 0, 50, 650);
+    ctx.font = "50px Verdana";
+    ctx.fillStyle = "blue";
+    ctx.fillText(players[1].life, 665, 300);
+    ctx.fillStyle = "red"
+    if(players.length == 3){
+    ctx.fillText(players[2].life, 665, 400);
+    }
+
+    ctx.fillStyle = "black";
+    ctx.fillText("L", 665, 50);
+    ctx.fillText("I", 665, 100);
+    ctx.fillText("F", 665, 150);
+    ctx.fillText("E", 665, 200);
+    ctx.fillText("S", 665, 250);
     //måla ut bomb för player 1 och player 2   
     if (bombPlayer1.length > 1 && bombTimer1 < 50) {
 
@@ -118,21 +153,6 @@ function update() {
         bombTimer1++;
     }
 
-    //skriva ut liv kvar
-
-    ctx.clearRect(650, 0, 50, 650);
-    ctx.font = "50px Verdana";
-    ctx.fillStyle = "blue";
-    ctx.fillText(players[1].life, 665, 300);
-    ctx.fillStyle = "red"
-    ctx.fillText(players[2].life, 665, 400);
-
-    ctx.fillStyle = "black";
-    ctx.fillText("L", 665, 50);
-    ctx.fillText("I", 665, 100);
-    ctx.fillText("F", 665, 150);
-    ctx.fillText("E", 665, 200);
-    ctx.fillText("S", 665, 250);
 
     //starta removeBoxes funktionen
     if (bombTimer1 == 50) {
@@ -160,20 +180,20 @@ function update() {
 
     //Player2 Sprängning
 
-    if (bombPlayer2.length > 1 && bombTimer2 < 50) {
+    if (bombPlayer2.length > 1 && bombTimer2 < 50 && players.length == 3) {
 
 
         bombPlayer2[1].bombRender();
         bombTimer2++;
     }
     //starta removeBoxes funktionen
-    if (bombTimer2 == 50) {
+    if (bombTimer2 == 50 && players.length == 3) {
         bombPlayer2[1].removeBoxes(players[2]);
         bombTimer2++;
         //console.log("skicka till removeBoxes");
     }
     //måla ut explosionen
-    if (bombTimer2 >= 51) {
+    if (bombTimer2 >= 51 && players.length == 3) {
 
         bombPlayer2[1].explosionRender(players[2]);
         bombTimer2++;
@@ -183,7 +203,7 @@ function update() {
 
     }
     //ta bort bomben och reseta bombTimer1
-    if (bombTimer2 == 100) {
+    if (bombTimer2 == 100 && players.length == 3) {
         bombPlayer2.splice(1, 1);
         //console.log("splice bomb2");
         bombTimer2 = 0;
@@ -229,10 +249,11 @@ function update() {
         console.log("skickar från P1");
         
     }
+    if(players.length == 3){
     if(players[2].immortalTimer  > 0){
         players[2].immortal();
         console.log("skickar från p2");
-    }
+    }}
 
     
     //Avsluta spelet
@@ -246,8 +267,8 @@ function update() {
             ctx.font = "50px Verdana";
             ctx.fillText("RÖD VINNER, GRATTIS!", 100, 300);
             
-        
-        } else if (players[2].life == 0 ) {
+        if(players.length == 3){
+        } else if (players[2].life == 0) {
             
             ctx.clearRect(0, 0, 750, 650);
             ctx.fillStyle = "black";
@@ -259,7 +280,7 @@ function update() {
             
 
 
-        }
+        }}
     
 
 
@@ -271,8 +292,29 @@ function update() {
 
     //måla players
     players[1].render();
+    
+    //endast måla om 2 players annars måla ut AI
+    if(players.length == 3){
     players[2].render();
-
+    
+    }
+    if(players.length == 2){
+       ai[0].render();
+        
+    }
+    
+    //AI gör actions
+    if(actionTimerAI < 50){
+        actionTimerAI++;
+    }
+    if(actionTimerAI == 50){
+        ai[0].actionCheck();
+        actionTimerAI++;
+    }
+    if(actionTimerAI == 51){
+        ai[0].doAction();
+        actionTimerAI = 0;
+    }
 
 
 
@@ -280,6 +322,7 @@ function update() {
 
 
 }
+
 
 function keyDown(e) {
     //Player1 kontroller

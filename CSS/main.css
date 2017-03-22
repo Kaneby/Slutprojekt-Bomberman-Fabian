@@ -5,3 +5,24 @@
 #explosion {display: none;}
 #bomb {display: none;}
 #boost {display: none;}
+
+#onePlayer{
+            width: 100;
+            height: 100;
+            background-color: aqua;
+        }
+        
+        #c {
+            background-color: white;
+            display: none;
+        }
+#twoPlayers{
+            width: 100;
+            height: 100;
+            background-color: greenyellow;
+        }
+        
+        #c {
+            background-color: white;
+            display: none;
+        }

@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link href="CSS/main.css" rel="stylesheet" type="text/css">
     <script src="JS/Boost.js"></script>
+    <script src="JS/Ai.js"></script>
     <script src="JS/Explosion.js"></script>
     <script src="JS/Boxes.js"></script>
     <script src="JS/Player.js"></script>
@@ -15,7 +16,7 @@
 
 </head>
 
-<body onload="start()"
+<body
       onkeydown = "keyDown(event)">
     <canvas width="700" height="650" id="c"></canvas>
     <img src="BILDER/boxes.jpg" id="boxes"></img>
@@ -24,7 +25,15 @@
     <img src="BILDER/player2.png" id="player2"></img>
     <img src="BILDER/explosion.png" id="explosion"></img>
     <img src="BILDER/bomb.png" id="bomb"></img>
-<img src="BILDER/boost.png" id="boost"></img>
+    <img src="BILDER/boost.png" id="boost"></img>
+    
+
+    <div id="onePlayer" onclick="init(1)">One Player</div>
+    <div id="twoPlayers" onclick="init(2)">Two Players</div>
+    
+            
+
+
 </body>
 
 </html>
